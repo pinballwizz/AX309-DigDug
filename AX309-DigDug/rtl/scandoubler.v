@@ -31,16 +31,16 @@ module scandoubler
 	// shifter video interface
 	input          hs_in,
 	input          vs_in,
-	input  wire    [3:0] video_r_in,
-	input  wire    [3:0] video_g_in,
-	input  wire    [3:0] video_b_in,
+	input  wire    [3:0] r_in,
+	input  wire    [3:0] g_in,
+	input  wire    [3:0] b_in,
 
 	// output interface
 	output reg hs_out,
 	output     vs_out,
-	output reg [3:0] video_r_out,
-	output reg [3:0] video_g_out,
-	output reg [3:0] video_b_out,
+	output reg [2:0] r_out,
+	output reg [2:0] g_out,
+	output reg [2:0] b_out,
 	input en_vid
 );
 
@@ -87,22 +87,21 @@ always @(posedge clk_sys) begin
 
 		// if no scanlines or not a scanline
 		if(!scanline || !scanlines) begin
-			video_r_out <= sd_out[3:0]; //sd_out[2:0];
- 		   video_g_out <= sd_out[7:4]; //sd_out[5:3]; 
-			video_b_out <= sd_out[0] & sd_out[11:9]; //sd_out[8:6];
+			r_out <= { sd_out[8:6] };
+			g_out <= { sd_out[5:3] };
+			b_out <= { sd_out[2:0] };
 		end else begin
 			if (scanlines) begin
-				video_r_out <= {1'b0,sd_out[2:1]};
-				video_g_out <= {1'b0,sd_out[5:4]};
-				video_b_out <= {1'b0,sd_out[8:7]};
+					r_out <= {1'b0, sd_out[8:7]};
+					g_out <= {1'b0, sd_out[5:4]};
+					b_out <= {1'b0, sd_out[2:1]};
 			end
 		end
 	end
 end
 
 // scan doubler output register
-reg [11:0] sd_out;
-//reg [8:0] sd_out;
+reg [8:0] sd_out;
 
 // ==================================================================
 // ======================== the line buffers ========================
@@ -141,7 +140,7 @@ begin :B00
 		// begin of incoming hsync
 		if(hsD && !hs_in) line_toggle <= !line_toggle;
 
-		sd_buffer[{line_toggle, hcnt}] <= {video_b_in, video_g_in, video_r_in};
+		sd_buffer[{line_toggle, hcnt}] <= {r_in[3:1], g_in[3:1], b_in[3:1]};
 	end
 end
 
