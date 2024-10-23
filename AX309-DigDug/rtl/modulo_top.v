@@ -135,20 +135,20 @@ sigma_delta_dac #(15) dac
 	.DACout(M_AUDIO)
 );
 //------------------------------------------------------------------------------
-  scandoubler sd (
-	.clk_sys(VCLKx4),
-	.video_r_in(M_VIDEO_R[3:0]),
-	.video_g_in(M_VIDEO_G[3:0]),
-	.video_b_in(M_VIDEO_B[3:0]),
-	.hs_in(~M_HSYNC),
-	.vs_in(~M_VSYNC),
-	.video_r_out(X_VIDEO_R),
-	.video_g_out(X_VIDEO_G),
-	.video_b_out(X_VIDEO_B),
-	.hs_out(X_HSYNC),
-	.vs_out(X_VSYNC),
-	.en_vid(PCLK),
-	.scanlines(1'b0)
-   );
+   scandoubler sd(
+		.clk_sys(VCLKx4),
+		.r_in(M_VIDEO_R),
+		.g_in(M_VIDEO_G),
+		.b_in(M_VIDEO_B),
+		.hs_in(~M_HSYNC),
+		.vs_in(~M_VSYNC),
+		.r_out(X_VIDEO_R),
+		.g_out(X_VIDEO_G),
+		.b_out(X_VIDEO_B),
+		.hs_out(X_HSYNC),
+		.vs_out(X_VSYNC),
+		.scanlines(1'b0),
+	   .en_vid(PCLK)	
+	);
 //----------------------------------------------------------------------------
 endmodule
