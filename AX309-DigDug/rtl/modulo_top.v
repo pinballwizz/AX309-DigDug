@@ -110,7 +110,7 @@ HVGEN hvgen
 //                  COIA  FRZE DSND CONT CABI DIFIC
 	wire  [7:0] DSW1 = {2'b00,1'b1,1'b1,1'b1,1'b1,2'b00};
 //                  SERVICE, 1'b0,m_coin2,m_coin1,m_start2,m_start1,m_pump2,m_pump1
-	wire  [7:0] INP0 = {1'b0, 1'b0, key_in[3], key_in[0], key_in[2], key_in[1], SW_FIRE, SW_FIRE };
+	wire  [7:0] INP0 = {1'b0, 1'b0, ~key_in[3], ~key_in[0], ~key_in[2], ~key_in[1], SW_FIRE, SW_FIRE };
 //                    left2   down2    right2    up2   left1     down1    right1    up1
 	wire  [7:0] INP1 = {SW_LEFT, SW_DOWN, SW_RIGHT, SW_UP, SW_LEFT, SW_DOWN, SW_RIGHT, SW_UP };
 
