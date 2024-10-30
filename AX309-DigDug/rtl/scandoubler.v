@@ -38,9 +38,9 @@ module scandoubler
 	// output interface
 	output reg hs_out,
 	output     vs_out,
-	output reg [2:0] r_out,
-	output reg [2:0] g_out,
-	output reg [2:0] b_out,
+	output reg [3:0] r_out,
+	output reg [3:0] g_out,
+	output reg [3:0] b_out,
 	input en_vid
 );
 
@@ -87,9 +87,9 @@ always @(posedge clk_sys) begin
 
 		// if no scanlines or not a scanline
 		if(!scanline || !scanlines) begin
-			r_out <= { sd_out[8:6] };
-			g_out <= { sd_out[5:3] };
-			b_out <= { sd_out[2:0] };
+			r_out <= { sd_out[8:6],1'b0 };
+			g_out <= { sd_out[5:3],1'b0 };
+			b_out <= { sd_out[2:0],1'b0 };
 		end else begin
 			if (scanlines) begin
 					r_out <= {1'b0, sd_out[8:7]};
